@@ -1,0 +1,31 @@
+@import "tailwindcss";
+@layer base {
+    /* Prevent autofill styles */
+    input:-webkit-autofill,
+    textarea:-webkit-autofill {
+      background-color: inherit !important; /* Ensure background stays inherited */
+      color: inherit !important; /* Ensure text stays inherited */
+      -webkit-text-fill-color: inherit !important; /* Ensure text color stays inherited */
+      box-shadow: none !important; /* Remove any box shadow applied by the browser */
+      border: none !important; /* Remove any border the browser adds */
+    }
+  
+    /* Disable browser default input styling */
+    input, textarea, select, button {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      background-color: inherit;
+      border: none;
+      color: inherit;
+      font-size: inherit;
+      line-height: inherit;
+    }
+  
+    /* Remove default focus rings and shadows for form elements */
+    input:focus, textarea:focus, select:focus, button:focus {
+      outline: none;
+      box-shadow: none;
+    }
+  }
+  
