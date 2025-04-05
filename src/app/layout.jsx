@@ -1,5 +1,7 @@
 import Navbar from "@components/navbar";
 import "@styles/globals.css";
+import { Store } from "@lib/store";
+import { Provider } from "react-redux";
 
 export const metadata = {
   title: "Vidverse",
@@ -10,8 +12,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className="bg-[#2E073F] text-white">
-        <Navbar />
-        {children}
+        <Provider store={Store}>
+          <Navbar />
+          {children}
+        </Provider>
       </body>
     </html>
   );
