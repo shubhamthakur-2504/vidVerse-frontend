@@ -1,32 +1,52 @@
 "use client";
 import Image from "next/image";
 import searchIcon from "/public/search-logo.png";
+import sidebarIcon from "/public/sidebar-logo.svg";
+import { useDispatch } from "react-redux";
+import { toggleSidebar } from "@lib/features/sidebarSlice";
 
 export default function Navbar() {
+  const dispatch = useDispatch();
+  const togglesidebar = () => {
+    dispatch(toggleSidebar())
+  }
+
   return (
-    <nav className="bg-[#2E073F] text-[#EBD3F8] px-4 py-3 shadow-md border-b border-[#7A1CAC]/30">
-      <div className="flex flex-col md:flex-row items-center justify-between gap-4 max-w-7xl mx-auto">
-        {/* Logo */}
-        <div className="text-2xl font-bold flex-shrink-0">
-          <span className="text-[#AD49E1]">Vid</span>verse
+    <nav className="bg-[#240332] text-[#EBD3F8] px-4 py-3 shadow-md border-b border-[#7A1CAC]/30 flex md:items-center justify-center">
+      <div className="flex items-center justify-center ml-5 mr-2">
+        <button className="hidden md:block h-5 w-5">
+          <Image src={sidebarIcon} alt="Sidebar" width={20} height={20} onClick={togglesidebar} className="w-5 h-5 rounded-2xl transform hover:scale-110 transition-transform duration-200" />
+        </button>
+      </div>
+      <div className="flex flex-col md:flex-row items-center  justify-between w-full gap-4 max-w-7xl mx-auto">
+        <div className="start flex flex-col md:flex-row items-center justify-start md:mr-auto gap-4 ">
+
+          {/* Logo */}
+          <div className="text-2xl font-bold flex-shrink-0">
+            <span className="text-[#AD49E1]">Vid</span>verse
+          </div>
         </div>
 
-        {/* Search Bar */}
-        <div className="flex items-center w-full md:w-1/2 bg-[#7A1CAC] rounded px-2 py-1 transform hover:scale-105 transition-transform duration-200">
-          <input
-            type="search"
-            placeholder="Search"
-            className="flex-grow bg-transparent text-white placeholder:text-[#EBD3F8] focus:outline-none text-sm "
-          />
-          <Image src={searchIcon} alt="Search" width={20} height={20} className=" rounded-2xl transform hover:scale-110 transition-transform duration-200" />
+        <div className="center flex items-center w-full justify-center">
+          {/* Search Bar */}
+          <div className="flex items-center w-full md:w-1/2 bg-[#7A1CAC] rounded px-2 py-1 transform hover:scale-105 transition-transform duration-200">
+            <input
+              type="search"
+              placeholder="Search"
+              className="flex-grow bg-transparent text-white placeholder:text-[#EBD3F8] focus:outline-none text-sm "
+            />
+            <Image src={searchIcon} alt="Search" width={20} height={20} className=" rounded-2xl transform hover:scale-110 transition-transform duration-200" />
+          </div>
         </div>
 
-        {/* Nav Links */}
-        <ul className="flex gap-4 text-sm font-medium justify-center md:justify-end w-full md:w-auto">
-          <li className="hover:text-[#AD49E1] transition-colors duration-200 cursor-pointer">
-            profile
-          </li>
-        </ul>
+        <div className="hidden md:block justify-end ">
+          {/* Nav Links */}
+          <ul className="flex gap-4 text-sm font-medium justify-center md:justify-end w-full md:w-auto">
+            <li className="hover:text-[#AD49E1] transition-colors duration-200 cursor-pointer">
+              profile
+            </li>
+          </ul>
+        </div>
       </div>
     </nav>
   );
