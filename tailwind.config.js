@@ -6,7 +6,11 @@ export const content = [
   "./src/**/*.{js,jsx}",
 ];
 export const theme = {
-  extend: {},
+  extend: {
+    animation: {
+      'spin-slow': 'spin 8s linear infinite',
+    }
+  },
 };
 export const plugins = [];
   
