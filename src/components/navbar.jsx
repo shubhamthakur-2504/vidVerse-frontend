@@ -1,22 +1,12 @@
-"use client";
+import SidebarButton from "./sidebarButton";
 import Image from "next/image";
 import searchIcon from "/public/search-logo.png";
-import sidebarIcon from "/public/sidebar-logo.svg";
-import { useDispatch } from "react-redux";
-import { toggleSidebar } from "@lib/features/sidebarSlice";
 
 export default function Navbar() {
-  const dispatch = useDispatch();
-  const togglesidebar = () => {
-    dispatch(toggleSidebar())
-  }
-
   return (
     <nav className="bg-[#240332] text-[#EBD3F8] px-4 py-3 shadow-md border-b border-[#7A1CAC]/30 flex md:items-center justify-center">
       <div className="flex items-center justify-center ml-5 mr-2">
-        <button className="hidden md:block h-5 w-5">
-          <Image src={sidebarIcon} alt="Sidebar" width={20} height={20} onClick={togglesidebar} className="w-5 h-5 rounded-2xl transform hover:scale-110 transition-transform duration-200" />
-        </button>
+        <SidebarButton />
       </div>
       <div className="flex flex-col md:flex-row items-center  justify-between w-full gap-4 max-w-7xl mx-auto">
         <div className="start flex flex-col md:flex-row items-center justify-start md:mr-auto gap-4 ">
