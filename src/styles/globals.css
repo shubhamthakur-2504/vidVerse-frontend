@@ -9,6 +9,11 @@
       box-shadow: none !important; /* Remove any box shadow applied by the browser */
       border: none !important; /* Remove any border the browser adds */
     }
+    input:-webkit-autofill {
+      -webkit-box-shadow: 0 0 0 30px #140857 inset !important; /* match your background */
+      -webkit-text-fill-color: white !important;
+    }
+    
   
     /* Disable browser default input styling */
     input, textarea, select, button {
