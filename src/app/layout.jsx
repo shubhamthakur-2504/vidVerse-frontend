@@ -10,7 +10,7 @@ export default function RootLayout({ children }) {
   const preloadedState = {}
   return (
     <html lang="en">
-       <body className="bg-[#2E073F] text-white w-screen h-screen">
+       <body className="bg-[#2E073F] text-white ">
         <Providers preloadedState={preloadedState}>
             <main>
                 {children}
