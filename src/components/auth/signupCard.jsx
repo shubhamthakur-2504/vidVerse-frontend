@@ -4,8 +4,12 @@ import "@styles/globals.css";
 import { useState } from 'react';
 import Image from "next/image";
 import apiClient from '@lib/axios/api';
+import {useRouter} from 'next/navigation';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function SignupCard() {
+    const router = useRouter();
     const [avatarImage, setAvatarImage] = useState(null);
     const [coverImage, setCoverImage] = useState(null);
     const [passwordError, setPasswordError] = useState(null);
@@ -53,15 +57,21 @@ export default function SignupCard() {
     })
     .then((res) => {
         console.log("Registered successfully:", res.data);
+        // save in store
+        toast.success("Registered successfully",{autoClose:1000,theme:"dark"});
+        setTimeout(()=>{
+            router.push("/auth/login");
+        },1000)
     })
     .catch((err) => {
-        console.error("Registration failed:", err);
+        toast.error(`Registration failed: ${err.response.data.message}`,{autoClose:3000,theme:"dark"});
     });
 };
 
     return (
 
         <div className='p-2 m-2 space-x-2'>
+            <ToastContainer />
             <form onSubmit={handleSubmit} action="" method="post">
                 <div className='flex flex-col pb-5'>
                     <div className='flex justify-start pb-2'>
