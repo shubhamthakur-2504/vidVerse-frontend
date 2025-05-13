@@ -3,9 +3,12 @@ import React from 'react'
 import "@styles/globals.css";
 import apiClient from '@lib/axios/api';
 import { useRouter } from 'next/navigation';
+import { useDispatch } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
+import { login } from '@lib/features/userDataSlice';
 export default function LoginCard() {
     const router = useRouter()
+    const dispatch = useDispatch()
     const handlesubmit = (e) => {
         e.preventDefault()
         const formdata = e.target.elements
@@ -19,6 +22,7 @@ export default function LoginCard() {
             }
         })
             .then((res) => {
+                dispatch(login(res.data.data.user))
                 toast.success("Login successfully",{autoClose:1000,theme:"dark",position:"top-center"});
                 setTimeout(()=>{
                     router.push("/")

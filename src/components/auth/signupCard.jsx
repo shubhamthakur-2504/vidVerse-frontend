@@ -57,7 +57,6 @@ export default function SignupCard() {
     })
     .then((res) => {
         console.log("Registered successfully:", res.data);
-        // save in store
         toast.success("Registered successfully",{autoClose:1000,theme:"dark"});
         setTimeout(()=>{
             router.push("/auth/login");

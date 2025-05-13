@@ -9,7 +9,7 @@ import home from "/public/home.svg"
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 export default function Sidebar() {
-    const isOpen = useSelector((state) => state.Sidebar.isOpen)
+    const isOpen = useSelector((state) => state.sidebar.isOpen)
     let pathname = usePathname();
     const segments = pathname.split('/').filter(Boolean);
     pathname = segments[0];
