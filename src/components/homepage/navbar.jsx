@@ -4,7 +4,7 @@ import searchIcon from "/public/search-logo.png";
 
 export default function Navbar() {
   return (
-    <nav className="bg-[#240332] text-[#EBD3F8] px-4 py-4 shadow-md border-b border-[#7A1CAC]/30 flex md:items-center justify-center">
+    <nav className="bg-[#121212] text-[#EBD3F8] px-4 py-4 shadow-md border-b border-[#7A1CAC]/30 flex md:items-center justify-center">
       <div className="flex items-center justify-center ml-5 mr-2">
         <SidebarButton />
       </div>

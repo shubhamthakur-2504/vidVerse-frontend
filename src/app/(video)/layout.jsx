@@ -9,7 +9,7 @@ export const metadata = {
 
 export default function VideoLayout({ children }) {
   return (
-    <div className="bg-[#2E073F] text-white ">
+    <div className="bg-[#020202] text-white ">
         <div>
           <div className="md:fixed md:top-0 md:z-50 md:w-screen">
             <Navbar />
