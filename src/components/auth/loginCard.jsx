@@ -29,7 +29,9 @@ export default function LoginCard() {
                 },1000)
             })
             .catch((err) => {
-                toast.error(`login failed: ${err.response.data.message}`,{autoClose:3000,theme:"dark",position:"top-center"});
+                toast.error(`login failed: ${err?.response?.data.message || "something went wrong"}`,{autoClose:3000,theme:"dark",position:"top-center"});
+                console.log(err.response);
+                
                 console.log(err);
                 
             })
