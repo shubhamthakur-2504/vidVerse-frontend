@@ -41,12 +41,13 @@ apiClient.interceptors.response.use(
 
       try {
         // Silent refresh request — cookies are used automatically
-        await axios.post(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL}/user/refreshaccess`,
+        await apiClient.post(
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}user/refreshaccess`,
           {},
           { withCredentials: true }
-        );
-
+        );        
+        console.log("refreshed");
+        
         processQueue(null);
         return apiClient(originalRequest); // retry original request
       } catch (refreshError) {
