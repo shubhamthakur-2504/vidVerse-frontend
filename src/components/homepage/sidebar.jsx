@@ -38,7 +38,7 @@ export default function Sidebar() {
                 </div>
             </Link>
 
-            <Link href={"/profile/video"}>
+            <Link href={"/profile/details"}>
                 <div className={`${isActive("/profile") ? " rounded-2xl shadow-2xl " : ""}`}>
                     <Image src={profile} alt="Profile" width={20} height={20} className={`${isActive("/profile") ? "w-10 h-10 " : "w-6 h-6"} rounded-2xl transform hover:scale-110 transition-transform duration-200`} />
                 </div>

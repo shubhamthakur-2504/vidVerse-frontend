@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 export default function Card() {
   return (
-    <div className="relative flex flex-col gap-4 p-1 w-76 bg-[#090a0f]  rounded-xl shadow-inner shadow-white/25 overflow-hidden">
+    <div className="relative flex flex-col gap-4 p-1 md:w-76 w-72 bg-[#090a0f]  rounded-xl shadow-inner shadow-white/25 overflow-hidden">
       <div className='relative'>
         <div className='h-[20vh] w-[20vw]'>
 

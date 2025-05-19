@@ -28,7 +28,7 @@ export default function SignupCard() {
             }
             reader.readAsDataURL(file)
         } else {
-            alert('Please select an image file.')
+           toast.error("Please select an image file.",{autoClose:3000,theme:"dark"})
         }
     }
     const handleSubmit = (e) => {
@@ -56,7 +56,6 @@ export default function SignupCard() {
         }
     })
     .then((res) => {
-        console.log("Registered successfully:", res.data);
         toast.success("Registered successfully",{autoClose:1000,theme:"dark"});
         setTimeout(()=>{
             router.push("/auth/login");
@@ -77,7 +76,7 @@ export default function SignupCard() {
                         <label htmlFor="userName" className=' items-start'>USERNAME</label>
                     </div>
                     <div className='border-[0.2px] border-[#535353] p-4 bg-[#1c1c1c] items-center'>
-                        <input type="text" name="userName" id="userName" title='userName' placeholder='username' className='w-full placeholder:text-[#6d6d6d] placeholder:text-left text-[#19FF1DFF]  ' onFocus={(e) => {
+                        <input type="text" name="userName" id="userName" title='userName' placeholder='username' className='w-full placeholder:text-[#6d6d6d] placeholder:text-left text-[#19FF1DFF]  ' required  onFocus={(e) => {
                             setTimeout(() => {
                                 e.target.classList.add("text-center");
                             }, 150);
@@ -94,7 +93,7 @@ export default function SignupCard() {
                         <label htmlFor="fullName" className=' items-start'>FULL NAME</label>
                     </div>
                     <div className='border-[0.2px] border-[#535353] p-4 bg-[#1c1c1c]'>
-                        <input type="text" name='fullName' id="fullName" title='fullName' placeholder='fullname' className='w-full placeholder:text-[#7d7d7d] placeholder:text-left text-[#19FF1DFF] ' onFocus={(e) => {
+                        <input type="text" name='fullName' id="fullName" title='fullName' placeholder='fullname' className='w-full placeholder:text-[#7d7d7d] placeholder:text-left text-[#19FF1DFF] 'required  onFocus={(e) => {
                             setTimeout(() => {
                                 e.target.classList.add("text-center");
                             }, 150);
@@ -110,7 +109,7 @@ export default function SignupCard() {
                         <label htmlFor="email" className=' items-start'>EMAIL</label>
                     </div>
                     <div className='border-[0.2px] border-[#535353] p-4 bg-[#1c1c1c]'>
-                        <input type="email" name="email" id="email" title='email' placeholder='email' className='w-full placeholder:text-[#7d7d7d] placeholder:text-left text-[#19FF1DFF]' onFocus={(e) => {
+                        <input type="email" name="email" id="email" title='email' placeholder='email' className='w-full placeholder:text-[#7d7d7d] placeholder:text-left text-[#19FF1DFF]' required  onFocus={(e) => {
                             setTimeout(() => {
                                 e.target.classList.add("text-center");
                             }, 150);
@@ -126,7 +125,7 @@ export default function SignupCard() {
                         <label htmlFor="password" className=' items-start'>PASSWORD</label>
                     </div>
                     <div className='border-[0.2px] border-[#535353] p-4 bg-[#1c1c1c]'>
-                        <input type="password" name="password" id="password" title='password' placeholder='password' className='w-full placeholder:text-[#7d7d7d] placeholder:text-left text-[#19FF1DFF]' onFocus={(e) => {
+                        <input type="password" name="password" id="password" title='password' placeholder='password' className='w-full placeholder:text-[#7d7d7d] placeholder:text-left text-[#19FF1DFF]' required  onFocus={(e) => {
                             setTimeout(() => {
                                 e.target.classList.add("text-center");
                             }, 150);
@@ -142,7 +141,7 @@ export default function SignupCard() {
                         <label htmlFor="confirmpassword" className=' items-start'>CONFIRM PASSWORD</label>
                     </div>
                     <div className='border-[0.2px] border-[#535353] p-4 bg-[#1c1c1c]'>
-                        <input type="password" name="confirmPassword" id="confirmPassword" title='confirm Password' placeholder='confirm password' className='w-full placeholder:text-[#7d7d7d] placeholder:text-left text-[#19FF1DFF]' onFocus={(e) => {
+                        <input type="password" name="confirmPassword" id="confirmPassword" title='confirm Password' placeholder='confirm password' className='w-full placeholder:text-[#7d7d7d] placeholder:text-left text-[#19FF1DFF]' required onFocus={(e) => {
                             setTimeout(() => {
                                 e.target.classList.add("text-center");
                             }, 150);
