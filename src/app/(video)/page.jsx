@@ -1,20 +1,10 @@
 import "@styles/globals.css"
-import Card from "@components/homepage/card";
 import HomePage from "./homepage";
+import AllVideo from "@components/video/allVideo";
 export default function Home() {
   return (
     <HomePage>
-      <Card />
-      <Card />
-      <Card />
-      <Card />
-      <Card />
-      <Card />
-      <Card />
-      <Card />
-      <Card />
-      <Card />
-      <Card />
+      <AllVideo pathName={"videos/getallvideos"} />
     </HomePage>
   );
 }
