@@ -1,10 +1,18 @@
 import axios from "axios";
 
+// Main API client with interceptors
 const apiClient = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
-    timeout: 120000,
-    withCredentials: true
-})
+  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
+  timeout: 120000,
+  withCredentials: true,
+});
+
+// Plain Axios instance with NO interceptors
+const plainAxios = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
+  timeout: 120000,
+  withCredentials: true,
+});
 
 let isRefreshing = false;
 let failedQueue = [];
@@ -25,35 +33,35 @@ apiClient.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    // If 401 (unauthorized) and not already retried
-    if (error.response?.status === 401 && !originalRequest._retry) {
+    // Prevent retrying refresh request
+    const isRefreshRequest = originalRequest.url?.includes("/user/refreshaccess");
+
+    if (error.response?.status === 401 && !originalRequest._retry && !isRefreshRequest) {
       originalRequest._retry = true;
 
-      // Prevent multiple refresh calls in parallel
       if (isRefreshing) {
         return new Promise((resolve, reject) => {
           failedQueue.push({ resolve, reject });
-        }).then(() => apiClient(originalRequest))
+        })
+          .then(() => apiClient(originalRequest))
           .catch(err => Promise.reject(err));
       }
 
       isRefreshing = true;
 
       try {
-        // Silent refresh request — cookies are used automatically
-        await apiClient.post(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL}user/refreshaccess`,
-          {},
-          { withCredentials: true }
-        );        
+        // Use plainAxios to avoid interceptor recursion
+        await plainAxios.post("user/refreshaccess");
+
         console.log("refreshed");
-        
+
         processQueue(null);
-        return apiClient(originalRequest); // retry original request
+        return apiClient(originalRequest); // Retry original request
       } catch (refreshError) {
+        console.log("inside catch to redirect to auth");
+
         processQueue(refreshError, null);
-        // Optionally redirect to login
-        window.location.href = "/auth/login";
+        window.location.href = "/auth/login"; // Redirect to login
         return Promise.reject(refreshError);
       } finally {
         isRefreshing = false;
