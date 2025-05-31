@@ -3,6 +3,8 @@ import { fetchVideos } from '@lib/utils/functions'
 import PlayVideo from '@components/video/playVideo'
 import DescriptionCard from '@components/video/descriptionCard'
 import AllVideo from '@components/video/allVideo'
+import MakeComment from '@components/comment/makeComment'
+import ShowComment from '@components/comment/showComment'
 export default async function page({params}) {
     const {videoId} = await params
     const video = await fetchVideos(`videos/getvideodetails/${videoId}`)    
@@ -34,7 +36,14 @@ export default async function page({params}) {
                 </div>
             </div>
             <DescriptionCard video={video} />
-            <div> here will be comments section</div>
+            <div>
+                <div>
+                    <MakeComment source={videoId}/>
+                </div>
+                <div>
+                    <ShowComment pathname={`videos/getallcomments/${videoId}`}/>
+                </div>
+            </div>
         </main>
         <aside className=' border border-e-indigo-700 flex-1/4'>
             <div>
