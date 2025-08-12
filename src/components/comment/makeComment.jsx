@@ -41,7 +41,7 @@ export default function MakeComment({ source }) {
     }
     return (
         <>
-            {isLoggedIn ? <div className='flex justify-center items-center w-full border border-blue-700 p-3 gap-1'>
+            {isLoggedIn ? <div className='flex justify-center items-center w-full  p-3 gap-1'>
                 <ToastContainer />
                 <div>
                     <div className='rounded-full w-10 h-10 bg-black overflow-hidden'>

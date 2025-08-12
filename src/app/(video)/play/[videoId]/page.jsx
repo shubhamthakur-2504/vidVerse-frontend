@@ -11,7 +11,7 @@ export default async function page({params}) {
 
   return (
     <div className='flex flex-col md:flex-row gap-2'>
-        <main className=' border border-red-500 flex-3/4 '>
+        <main className=' flex-3/4 '>
             <PlayVideo videoSrc={video.videoFileUrl} />
             <div className='m-2'>
                 <div>
@@ -19,7 +19,7 @@ export default async function page({params}) {
                 </div>
                 <div className='flex gap-2 m-2 justify-between flex-wrap'>
                     <div className='flex gap-2'>
-                    <div className='rounded-full overflow-hidden h-[5vh] w-[5vh] border border-red-800'>
+                    <div className='rounded-full overflow-hidden h-[5vh] w-[5vh]'>
                         <img src={video.owner.avatarUrl} alt="avatar pic" className='aspect-square' />
                     </div>
                     <div>
@@ -45,7 +45,7 @@ export default async function page({params}) {
                 </div>
             </div>
         </main>
-        <aside className=' border border-e-indigo-700 flex-1/4'>
+        <aside className=' flex-1/4'>
             <div>
                 <h1 className='text-xl text-center'>Suggestions</h1>
                 <div className='p-2'>
