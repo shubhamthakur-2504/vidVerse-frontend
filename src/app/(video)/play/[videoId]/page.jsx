@@ -4,7 +4,7 @@ import PlayVideo from '@components/video/playVideo'
 import DescriptionCard from '@components/video/descriptionCard'
 import AllVideo from '@components/video/allVideo'
 import MakeComment from '@components/comment/makeComment'
-import ShowComment from '@components/comment/showComment'
+import CommentSection from '@components/comment/commentSection'
 export default async function page({params}) {
     const {videoId} = await params
     const video = await fetchVideos(`videos/getvideodetails/${videoId}`)    
@@ -41,7 +41,7 @@ export default async function page({params}) {
                     <MakeComment source={videoId}/>
                 </div>
                 <div>
-                    <ShowComment pathname={`videos/getallcomments/${videoId}`}/>
+                    <CommentSection  pathName={`videos/getallcomments/${videoId}`}/>
                 </div>
             </div>
         </main>

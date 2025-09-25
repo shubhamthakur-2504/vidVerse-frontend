@@ -4,16 +4,17 @@ import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import sidebarReducer from "./features/sidebarSlice";
 import userDataReducer from "./features/userDataSlice";
-
+import commentPostedReducer from "./features/commentPostedSlice";
 const vidReducer = combineReducers({
   sidebar: sidebarReducer,
   userData: userDataReducer,
+  commentPosted: commentPostedReducer
 })
 
 const persistConfig = {
   key: "vidVerse",
   storage,
-  whitelist: ['sidebar', 'userData'] ,
+  whitelist: ['sidebar', 'userData', 'commentPosted' ] ,
 }
 
 

@@ -5,9 +5,12 @@ import apiClient from '@lib/axios/api'
 import { useRouter } from 'next/navigation'
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useDispatch } from 'react-redux'
+import { toggleCommentPosted } from '@lib/features/commentPostedSlice'
 
 export default function MakeComment({ source }) {
     const router = useRouter()
+    const dispatch = useDispatch()
     const [comment, setComment] = useState("")
     const hiddenStatus = comment.trim().length === 0
     const isLoggedIn = useSelector((state) => state?.userData.isLoggedIn)
@@ -30,6 +33,10 @@ export default function MakeComment({ source }) {
             const res = await apiClient.post(`videos/createcomment/${source}`, comment, {
                 withCredentials: true
             })
+            if(res.status === 200){
+                console.log("comment posted successfully");
+                dispatch(toggleCommentPosted())
+            }
             toast.success("comment posted",{autoClose:1000,theme:"dark"});
 
         } catch (error) {
