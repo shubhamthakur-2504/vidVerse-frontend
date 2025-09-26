@@ -27,7 +27,7 @@ export default function Card({ video }) {
         </div>
         <hr className='m-0 p-0' />
         <div className=' flex flex-row w-full bg-[#090a0f] text-xs text-white h-[11vh] pt-0 pl-2 rounded-xl items-start m-0'>
-          <div className='mr-2'>
+          <div className='mr-2 mt-2'>
             <div className='rounded-full w-10 h-10 bg-black overflow-hidden'>
               <img src={`${video.owner.avatarUrl}`} alt="owner avatar" className='w-10 h-10' />
             </div>

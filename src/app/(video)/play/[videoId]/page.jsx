@@ -5,10 +5,16 @@ import DescriptionCard from '@components/video/descriptionCard'
 import AllVideo from '@components/video/allVideo'
 import MakeComment from '@components/comment/makeComment'
 import CommentSection from '@components/comment/commentSection'
+import SubscribeButton from '@components/buttons/subscribeButton'
+import {cookies} from 'next/headers'
 export default async function page({params}) {
     const {videoId} = await params
-    const video = await fetchVideos(`videos/getvideodetails/${videoId}`)    
-
+    const cookieStore = await cookies()
+    const video = await fetchVideos(`videos/getvideodetails/${videoId}`,false, cookieStore)
+    if (!video) {
+        return <div>Video not found</div>
+    }    
+    
   return (
     <div className='flex flex-col md:flex-row gap-2'>
         <main className=' flex-3/4 '>
@@ -27,7 +33,9 @@ export default async function page({params}) {
                         <p className='text-[10px] text-[#EBD3F8]'>subscribers</p>
                     </div>
                     </div>
-                    <div>subscribe</div>
+                    <div>
+                        <SubscribeButton channelId={video.owner._id}/>
+                    </div>
                     <div className='flex gap-1'>
                         <div>like</div>
                         <div>dislike</div>
@@ -55,5 +63,5 @@ export default async function page({params}) {
             </div>
         </aside>
     </div>
-  )
+ )
 }
