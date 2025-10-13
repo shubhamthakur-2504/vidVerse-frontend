@@ -1,30 +1,58 @@
 'use client'
-import React from 'react'
-import { gernalFetch } from '@lib/utils/functions'
+import React, { useState, useEffect } from 'react'
+import { gernalFetch, gernalPost, gernalDelete } from '@lib/utils/functions'
 import { useSelector } from 'react-redux'
-export default function SubscribeButton(channelId) {
+import { useRouter } from 'next/navigation'
+import { toast } from 'react-toastify'
+import { usePathname } from 'next/navigation'
+export default function SubscribeButton({channelId}) {
+    const currentPath = usePathname()
+    const router = useRouter()
+    const loggedStatus = useSelector((state) => state.userData.isLoggedIn)
+    const [isSubscribed, setIsSubscribed] = useState(false)
     
-    const loggedStatus = useSelector((state) => state.userData.userData.isLoggedIn)
-    let isSubscribed = false
-    if(loggedStatus){
-        isSubscribed = gernalFetch(`subscription/issubscribed/${channelId}`, true)
-    }
-    const toggleSubscription =  () => {
+    useEffect(() => {
+        // Only check if the user is logged in
+        if (loggedStatus) {
+            const checkSubscriptionStatus = async () => {
+                try {
+                    const status = await gernalFetch(`subscription/issubscribed/${channelId}`, true);                    
+                    
+                    setIsSubscribed(status.isSubscribed); // 2. Update the component's state
+                } catch (error) {
+                    console.error("Failed to check subscription status:", error);
+                }
+            };
+            checkSubscriptionStatus();
+        }
+    }, [loggedStatus, channelId]);
+    const toggleSubscription = async () => {
         if (!loggedStatus) {
-            window.location.href = "/auth/login"
+            toast.error("Login to subscribe, redirecting...", { autoClose: 1000, theme: "dark", position: "top-center" });
+            router.replace(`/auth/login?redirect=${encodeURIComponent(currentPath)}`)
             return
         }
-        if (isSubscribed) {
-            gernalFetch(`subscription/unsubscribe/${channelId}`, true)
-        } else {
-            gernalFetch(`subscription/subscribe/${channelId}`, true)
+        try {
+            if (isSubscribed) {
+                await gernalDelete(`subscription/unsubscribe/${channelId}`, true)
+                setIsSubscribed(false)
+                toast.success("Unsubscribed", { autoClose: 500, theme: "dark", position: "top-center" });
+            } else {
+                await gernalPost(`subscription/subscribe/${channelId}`, true)
+                setIsSubscribed(true)
+                toast.success("Subscribed", { autoClose: 500, theme: "dark", position: "top-center" });
+            }
+        } catch (error) {
+            console.log(error);
         }
     }
     return (
+        <>
         <button
             onClick={toggleSubscription}
             className={isSubscribed ? "bg-black text-white font-bold hover:bg-[#535353] p-2 m-2 rounded-lg" : "bg-red-600 text-white font-bold hover:bg-[#ff1d1d] p-2 m-2 rounded-lg"}>
             {isSubscribed ? "subscribed" : "subscribe"}
         </button>
+        </>
     )
 }

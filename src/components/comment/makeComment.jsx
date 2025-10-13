@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch } from 'react-redux'
-import { toggleCommentPosted } from '@lib/features/commentPostedSlice'
+import { setCommentPosted } from '@lib/features/commentPostedSlice'
 
 export default function MakeComment({ source }) {
     const router = useRouter()
@@ -35,7 +35,7 @@ export default function MakeComment({ source }) {
             })
             if(res.status === 200){
                 console.log("comment posted successfully");
-                dispatch(toggleCommentPosted())
+                dispatch(setCommentPosted(true))
             }
             toast.success("comment posted",{autoClose:1000,theme:"dark"});
 
