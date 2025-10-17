@@ -37,6 +37,8 @@ export default function MakeComment({ source }) {
                 console.log("comment posted successfully");
                 dispatch(setCommentPosted(true))
             }
+            formElements.comment.value = ""
+            setComment("")
             toast.success("comment posted",{autoClose:1000,theme:"dark"});
 
         } catch (error) {

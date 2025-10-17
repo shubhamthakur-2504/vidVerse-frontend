@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactionButton from '@components/buttons/reactionButton'
 
 export default function CommentBox({comment}) {    
     return (
@@ -18,7 +19,7 @@ export default function CommentBox({comment}) {
                     {`${comment.content}`}
                 </div>
                 <div>
-                    like dislike 
+                    <ReactionButton targetId={comment._id} targetType={"Comment"} />
                 </div>
             </div>
         </div>
