@@ -6,12 +6,13 @@ import AllVideo from '@components/video/allVideo'
 import MakeComment from '@components/comment/makeComment'
 import CommentSection from '@components/comment/commentSection'
 import SubscribeButton from '@components/buttons/subscribeButton'
+import ReactionButton from '@components/buttons/reactionButton'
 import {cookies} from 'next/headers'
 export default async function PlayPage({params}) {
     const {videoId} = await params
     const cookieStore = await cookies()
     const video = await fetchVideos(`videos/getvideodetails/${videoId}`,false, cookieStore) 
-       
+
     if (!video || video.status === 404) {
         return <div>Video not found</div>
     }
@@ -52,9 +53,8 @@ export default async function PlayPage({params}) {
                     <div>
                         <SubscribeButton channelId={video.owner?._id}/>
                     </div>
-                    <div className='flex gap-1'>
-                        <div>like</div>
-                        <div>dislike</div>
+                    <div className='gap-1 w-35 h-20'>
+                        <ReactionButton targetId={videoId} targetType={"Video"} />
                     </div>
                     <div className='mr-3'>share</div>
                 </div>
