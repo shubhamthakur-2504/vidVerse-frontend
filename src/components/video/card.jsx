@@ -39,7 +39,7 @@ export default function Card({ video }) {
             <div className='text-[#EBD3F8] mb-1'>
               <p>{video.owner.userName}</p>
             </div>
-            <div className='flex justify-between text-[10px] text-[#EBD3F8] mb-0.5 mr-0.5 ml-0.5'>
+            <div className='flex justify-between text-[10px] text-[#EBD3F8] mb-0.5 mr-0.5 ml-0.3'>
               <div>
                 <p>{video.views + " views"}</p>
               </div>

@@ -9,7 +9,7 @@ export default function UserProfileData() {
    
   if (!userData.isLoggedIn || !userData.userData) {
     useEffect(() => {
-    if (!userData.isLoggedIn) {
+    if (userData.isLoggedIn == false || userData.userData == null) {
       router.push("/auth/login");
     }
   }, [userData === null]);

@@ -2,7 +2,7 @@ import React from 'react'
 import ProfilePage from './profilePage'
 import ProfileCard from '@components/profile/profileCard';
 import "@styles/globals.css";
-export default function page() {
+export default function Page() {
   return (
     <div className='block'>
       <ProfilePage>

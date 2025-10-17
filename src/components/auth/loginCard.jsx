@@ -2,13 +2,15 @@
 import React from 'react'
 import "@styles/globals.css";
 import apiClient from '@lib/axios/api';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useDispatch } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
-import { login } from '@lib/features/userDataSlice';
+import { login, logout } from '@lib/features/userDataSlice';
 export default function LoginCard() {
     const router = useRouter()
     const dispatch = useDispatch()
+    const searchParams = useSearchParams();
+    const redirectTo = searchParams.get('redirect') || '/';
     const handlesubmit = (e) => {
         e.preventDefault()
         const formdata = e.target.elements
@@ -25,13 +27,13 @@ export default function LoginCard() {
                 dispatch(login(res.data.data.user))
                 toast.success("Login successfully",{autoClose:1000,theme:"dark",position:"top-center"});
                 setTimeout(()=>{
-                    router.push("/")
+                    router.push(redirectTo)
                 },1000)
             })
             .catch((err) => {
                 toast.error(`login failed: ${err?.response?.data.message || "something went wrong"}`,{autoClose:3000,theme:"dark",position:"top-center"});
                 console.log(err.response);
-                
+                dispatch(logout())
                 console.log(err);
                 
             })
@@ -91,7 +93,7 @@ export default function LoginCard() {
                 </div>
 
                 <div className='flex justify-center items-center'>
-                    <button type="submit" className='bg-[#7A1CAC] text-[#EBD3F8] px-4 py-2 rounded-md hover:bg-[#AD49E1] hover:text-[#EBD3F8]'>SIGNUP</button>
+                    <button type="submit" className='bg-[#7A1CAC] text-[#EBD3F8] px-4 py-2 rounded-md hover:bg-[#AD49E1] hover:text-[#EBD3F8]'>LOGIN</button>
                 </div>
             </form>
         </div>
