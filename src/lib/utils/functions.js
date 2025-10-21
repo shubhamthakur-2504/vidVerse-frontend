@@ -65,7 +65,7 @@ async function gernalPost(pathName, data=null) {
     if (data) {
         try {
             const res = await apiClient.post(pathName, data);
-            return res.data.data;
+            return res.data;
         } catch (error) {
             console.error("Axios post failed", error);
             const errorBody= await res.text()
@@ -74,7 +74,7 @@ async function gernalPost(pathName, data=null) {
     }else{
         try {
             const res = await apiClient.post(pathName);
-            return res.data.data;
+            return res.data;
         } catch (error) {
             console.error("Axios post failed", error);
             const errorBody= await res.text()
@@ -87,7 +87,7 @@ async function gernalDelete(pathName, data=null) {
     if (data) {
         try {
             const res = await apiClient.delete(pathName, data);
-            return res.data.data;
+            return res.data;
         } catch (error) {
             console.error("Axios delete failed", error);
             const errorBody= await res.text()
@@ -96,7 +96,7 @@ async function gernalDelete(pathName, data=null) {
     }else{
         try {
             const res = await apiClient.delete(pathName);
-            return res.data.data;
+            return res.data;
         } catch (error) {
             console.error("Axios delete failed", error);
             const errorBody= await res.text()
