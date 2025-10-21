@@ -16,14 +16,16 @@ export default function ReactionButton({ targetId, targetType }) {
     const loggedStatus = useSelector((state) => state.userData.isLoggedIn)
     const [likeCount, setLikeCount] = useState(0);
     const [likeStatus, setLikeStatus] = useState(false);
+    const [likeImage, setLikeImage] = useState(likeIcon);
     const [dislikeStatus, setDislikeStatus] = useState(false);
+    const [dislikeImage, setDislikeImage] = useState(dislikeIcon);
 
 
     useEffect(() => {
         const fetchLikeCount = async () => {
             try {
                 const count = await gernalFetch(`reaction/${targetId}/count?targetType=${targetType}`);
-                console.log("Like count: ",count);
+                console.log("Like count: ", count);
                 if (count && typeof count.likes === 'number') {
                     setLikeCount(count.likes);
                 } else {
@@ -39,18 +41,24 @@ export default function ReactionButton({ targetId, targetType }) {
             if (loggedStatus) {
                 try {
                     const status = await gernalFetch(`reaction/${targetId}?targetType=${targetType}`);
-                    console.log("Reaction status: ",status);
+
                     if (status.status == 'none') {
                         setLikeStatus(false);
                         setDislikeStatus(false);
+                        setDislikeImage(dislikeIcon);
+                        setLikeImage(likeIcon);
                         return
                     } else if (status.status == 'like') {
                         setLikeStatus(true);
                         setDislikeStatus(false);
+                        setDislikeImage(dislikeIcon);
+                        setLikeImage(likedIcon);
                         return
                     } else if (status.status == 'dislike') {
                         setLikeStatus(false);
                         setDislikeStatus(true);
+                        setDislikeImage(dislikedIcon);
+                        setLikeImage(likeIcon);
                         return
                     }
                 } catch (error) {
@@ -71,59 +79,74 @@ export default function ReactionButton({ targetId, targetType }) {
             return
         }
         const type = e.currentTarget.dataset.type
-        console.log(type);
-        console.log(typeof type);
-        
-        
+
         try {
             if (type === "like") {
                 if (likeStatus) {
                     try {
-                        console.log("hit liked like");
-                        
+                        setLikeCount(prevCount => prevCount - 1)
+                        setDislikeImage(dislikeIcon);
+                        setLikeImage(likeIcon);
                         const res = await gernalDelete(`reaction/${targetId}`, { targetType: targetType })
-                        if (res.status === 200 || res.status === 204 || res.success === true) {
+
+                        if (res.statusCode === 200 || res.statusCode === 204 || res.success === true) {
                             setLikeStatus(false)
-                            setLikeCount(prevCount => prevCount - 1)
+                            setDislikeStatus(false)
                             toast.success("Like removed", { autoClose: 300, theme: "dark", position: "top-right" });
                         }
                     } catch (error) {
+                        setLikeCount(prevCount => prevCount + 1)
+                        setDislikeImage(dislikeIcon);
+                        setLikeImage(likedIcon);
                         setLikeStatus(true)
+                        setDislikeStatus(false)
                         toast.error("Failed to remove like", { autoClose: 300, theme: "dark", position: "top-right" });
                     }
                 } else {
                     try {
-                        console.log("hit like");
-                        const res = await gernalPost(`reaction/${targetId}`, { targetType: targetType, isLike: true })
-                        if (res.status === 200 || res.status === 201 || res.success === true) {
+                        setLikeCount(prevCount => prevCount + 1)
+                        setDislikeImage(dislikeIcon);
+                        setLikeImage(likedIcon);
+                        const res = await gernalPost(`reaction/${targetId}`, { targetType: targetType, isLike: "true" })
+
+                        if (res.statusCode === 200 || res.statusCode === 201 || res.success === true) {
                             setLikeStatus(true)
-                            setLikeCount(prevCount => prevCount + 1)
                             setDislikeStatus(false)
                             toast.success("Liked", { autoClose: 300, theme: "dark", position: "top-right" });
                         }
                     } catch (error) {
                         setLikeStatus(false)
+                        setLikeCount(prevCount => prevCount - 1)
+                        setDislikeImage(dislikeIcon);
+                        setLikeImage(likeIcon);
                         toast.error("Failed to like", { autoClose: 300, theme: "dark", position: "top-right" });
                     }
                 }
             } else if (type === "dislike") {
                 if (dislikeStatus) {
                     try {
-                        console.log("hit disliked dislike");
+                        setDislikeImage(dislikeIcon);
+                        setLikeImage(likeIcon);
                         const res = await gernalDelete(`reaction/${targetId}`, { targetType: targetType })
-                        if (res.status === 200 || res.status === 204 || res.success === true) {
+
+                        if (res.statusCode === 200 || res.statusCode === 204 || res.success === true) {
                             setDislikeStatus(false)
+                            setLikeStatus(false)
                             toast.success("Dislike removed", { autoClose: 300, theme: "dark", position: "top-right" });
                         }
                     } catch (error) {
                         setDislikeStatus(true)
+                        setDislikeImage(dislikedIcon);
+                        setLikeImage(likeIcon);
                         toast.error("Failed to remove dislike", { autoClose: 300, theme: "dark", position: "top-right" });
                     }
                 } else {
                     try {
-                        console.log("hit dislike");
-                        const res = await gernalPost(`reaction/${targetId}`, { targetType: targetType, isLike: false })
-                        if (res.status === 200 || res.status === 201 || res.success === true) {
+                        setDislikeImage(dislikedIcon);
+                        setLikeImage(likeIcon);
+                        const res = await gernalPost(`reaction/${targetId}`, { targetType: targetType, isLike: "false" })
+
+                        if (res.statusCode === 200 || res.statusCode === 201 || res.success === true) {
                             setDislikeStatus(true)
                             if (likeStatus) {
                                 setLikeCount(prevCount => prevCount - 1)
@@ -133,6 +156,8 @@ export default function ReactionButton({ targetId, targetType }) {
                         }
                     } catch (error) {
                         setDislikeStatus(false)
+                        setDislikeImage(dislikeIcon);
+                        setLikeImage(likeIcon);
                         toast.error("Failed to dislike", { autoClose: 300, theme: "dark", position: "top-right" });
                     }
                 }
@@ -146,10 +171,10 @@ export default function ReactionButton({ targetId, targetType }) {
 
         <div className='flex bg-[#131213] p-1 justify-between items-center rounded-2xl'>
             <div className='flex justify-center items-center m-1 pr-1.5 border-r-3 border-[#000000]'>
-                <button data-type = "like" onClick={handleReaction} className='flex gap-0.5'><Image src={likeStatus ? likedIcon : likeIcon} alt="Like" width={20} height={20} className="w-10 h-9 rounded-2xl transform hover:scale-110 transition-transform duration-200" /><span className='text-2xl pt-1 pl-2'>{likeCount}</span></button>
+                <button data-type="like" onClick={handleReaction} className='flex gap-0.5'><Image src={likeImage} alt="Like" width={20} height={20} className={`rounded-2xl transform hover:scale-110 transition-transform duration-200 ${targetType == "Comment" ? "w-5 h-5 pt-1" : "w-10 h-9"}`} /><span className={`${targetType == "Comment" ? "text-sm pt-0.5 pl-1" : "text-2xl pt-1 pl-2"}text-2xl pt-1 pl-2`}>{likeCount}</span></button>
             </div>
             <div className='flex justify-center items-center m-1'>
-                <button data-type = "dislike" onClick={handleReaction} className='flex gap-0.5'><Image src={dislikeStatus ? dislikedIcon : dislikeIcon} alt="Dislike" width={20} height={20} className="w-10 h-9 rounded-2xl transform hover:scale-110 transition-transform duration-200" /></button>
+                <button data-type="dislike" onClick={handleReaction} className='flex gap-0.5'><Image src={dislikeImage} alt="Dislike" width={20} height={20} className={`${targetType == "Comment" ? "w-5 h-5" : "w-10 h-9"} rounded-2xl transform hover:scale-110 transition-transform duration-200`} /></button>
             </div>
         </div>
 
