@@ -20,12 +20,12 @@ export default async function PlayPage({params}) {
     let subCount = 0
     if(video.owner){
         subCount = await gernalFetch(`subscription/subscriberscount/${video.owner._id}`, false, cookieStore)
-        if(subCount && subCount.count > 1000){
-            subCount = subCount.count / 1000
-            subCount = `${subCount}k`
-        }else if(subCount && subCount.count > 1000000){
+        if(subCount && subCount.count > 999999){      
             subCount = subCount.count / 1000000
             subCount = `${subCount}M`
+        }else if(subCount && subCount.count > 999 ){
+            subCount = subCount.count / 1000
+            subCount = `${subCount}k`
         }else{
             subCount = subCount.count
         }
