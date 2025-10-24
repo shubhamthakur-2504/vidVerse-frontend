@@ -1,6 +1,7 @@
 import SidebarButton from "./sidebarButton";
 import Image from "next/image";
 import searchIcon from "/public/search-logo.png";
+import UploadButton from "@components/buttons/uploadButton";
 
 export default function Navbar() {
   return (
@@ -32,8 +33,8 @@ export default function Navbar() {
         <div className="hidden md:block justify-end ">
           {/* Nav Links */}
           <ul className="flex gap-4 text-sm font-medium justify-center md:justify-end w-full md:w-auto">
-            <li className="hover:text-[#AD49E1] transition-colors duration-200 cursor-pointer">
-              profile
+            <li>
+              <UploadButton />
             </li>
           </ul>
         </div>
