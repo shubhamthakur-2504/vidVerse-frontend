@@ -34,15 +34,16 @@ export default function SubscribeButton({channelId}) {
         }
         try {
             if (isSubscribed) {
-                await gernalDelete(`subscription/unsubscribe/${channelId}`, true)
                 setIsSubscribed(false)
+                await gernalDelete(`subscription/unsubscribe/${channelId}`, true)
                 toast.success("Unsubscribed", { autoClose: 500, theme: "dark", position: "top-center" });
             } else {
-                await gernalPost(`subscription/subscribe/${channelId}`, true)
                 setIsSubscribed(true)
+                await gernalPost(`subscription/subscribe/${channelId}`, true)
                 toast.success("Subscribed", { autoClose: 500, theme: "dark", position: "top-center" });
             }
         } catch (error) {
+             setIsSubscribed(prev => !prev);
             console.log(error);
         }
     }
